@@ -21,7 +21,8 @@ object TwitterAPI {
   val twitterFactory = new TwitterFactory(cb.build)
 
   def search(query:String , maxId:Long) = {
-    val q = new Query(query)
+
+    val q = new Query("\""+query+"\"")
     q.setMaxId(maxId-1)
     q.setCount(count)
 
