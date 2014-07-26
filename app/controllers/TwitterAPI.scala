@@ -7,16 +7,19 @@ import twitter4j.{Query, TwitterFactory}
 
 import scala.collection.JavaConversions._
 
+/**
+ * Query the Twitter API
+ */
 object TwitterAPI {
 
   val count = 20
 
-  val cb = new ConfigurationBuilder();
+  val cb = new ConfigurationBuilder()
   cb.setDebugEnabled(true)
     .setOAuthConsumerKey(Play.current.configuration.getString("twitter.consumerKey").get)
     .setOAuthConsumerSecret(Play.current.configuration.getString("twitter.consumerSecret").get)
     .setOAuthAccessToken(Play.current.configuration.getString("twitter.accessToken").get)
-    .setOAuthAccessTokenSecret(Play.current.configuration.getString("twitter.accessTokenSecret").get);
+    .setOAuthAccessTokenSecret(Play.current.configuration.getString("twitter.accessTokenSecret").get)
 
   val twitterFactory = new TwitterFactory(cb.build)
 

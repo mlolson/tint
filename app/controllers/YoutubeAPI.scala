@@ -11,6 +11,9 @@ import models.YoutubeResult
 
 import scala.collection.JavaConversions._
 
+/**
+ * Query the Youtube API
+ */
 object YoutubeAPI {
 
   val num_results = 10
