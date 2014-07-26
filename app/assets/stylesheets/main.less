@@ -3,11 +3,22 @@ html, body {
 }
 
 footer {
-  padding-left:10px;
+  padding: 10px 0 10px 17%;
+
+  span.name{
+    position: relative;
+    top: -4px;
+    padding-right: 8px;
+  }
+
+  a {
+    padding-right: 8px;
+  }
 }
 
 .container-fluid {
-  height: 95%;
+  min-height: 90%;
+  max-width: 980px;
 }
 
 .row {
@@ -19,7 +30,7 @@ footer {
   padding-bottom: 10px;
 }
 
-#tweet-container {
+#tweets-col {
   padding-left:20px;
   padding-top: 39px;
   height:100%;
@@ -30,7 +41,7 @@ footer {
   padding-top: 10px;
   padding-bottom: 5px;
   height: 90%;
-  box-shadow: 2px 2px 2px 2px rgba(0,0,0,0.3);
+  box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.3);
   border-radius: 4px;
   margin-top: 25px;
 
@@ -41,27 +52,42 @@ footer {
     padding-right: 20px;
     padding-left: 20px;
     margin-top: 5px;
-    max-height: 615px;
+    max-height: 500px;
 
+    li.spinner-container {
+      height: 30px;
+    }
   }
 
   .tweets-label {
     font-family: sans-serif;
     font-size: 11pt;
+    text-shadow: 0px 1px 1px rgba(0,0,0,0.2);
   }
 }
 
+#video-col {
+  padding-left: 20px;
+}
+
 .video-container {
-  padding-top: 45px;
+  box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+  margin-top: 64px;
+  padding: 45px 10px 40px 10px;
+  width: 560px;
   h2 {
     max-width: 540px;
+    margin-top: 0;
   }
 }
 
 ul.select2-results{
   max-height:400px;
-}
 
-span.video-title {
-  padding-left:10px;
+  .video-title {
+    padding-left:10px;
+    max-width:600px;
+    display:inline-block;
+  }
 }

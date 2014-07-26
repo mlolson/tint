@@ -1,4 +1,4 @@
-define(function(require){
+define(function(require) {
 
     var React = require('react'),
         SearchBox = require('jsx!./components/SearchBox');

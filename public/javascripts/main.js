@@ -1,3 +1,6 @@
+/**
+ * Require.js configuration file, app entry point
+ */
 requirejs.config({
     paths: {
         jquery:'vendor/jquery/dist/jquery.min',

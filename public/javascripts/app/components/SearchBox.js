@@ -7,8 +7,8 @@ define(function(require) {
         $ = require('jquery'),
         TweetList = require('jsx!./TweetList'),
         VideoPlayer = require('jsx!./VideoPlayer'),
-        tweetContainer = document.getElementById('tweet-container'),
-        videoContainer = document.getElementById('video-container');
+        tweetContainer = document.getElementById('tweets-col'),
+        videoContainer = document.getElementById('video-col');
 
     require('select2');
 
@@ -19,9 +19,9 @@ define(function(require) {
          * corresponding list of tweets
          * @param video
          */
-        onSelectVideo: function(video){
+        onSelectVideo: function(video) {
             videoContainer.innerHTML = '';
-            React.renderComponent(VideoPlayer({video:video}), videoContainer);
+            React.renderComponent(VideoPlayer({video: video}), videoContainer);
 
             $.ajax({
                 method: 'GET',
@@ -30,9 +30,9 @@ define(function(require) {
                 data: {
                     q: video.id
                 }
-            }).done(function(data){
+            }).done(function(data) {
                 tweetContainer.innerHTML = '';
-                React.renderComponent(TweetList({tweets:data, videoId:video.id}), tweetContainer);
+                React.renderComponent(TweetList({tweets: data, videoId: video.id}), tweetContainer);
                 twttr.widgets.load();
             }.bind(this));
         },
@@ -45,24 +45,24 @@ define(function(require) {
             var $searchBox = $('#search-box');
             $searchBox.select2({
                 minimumInputLength: 2,
-                allowClear:true,
+                allowClear: true,
                 placeholder: 'Search YouTube videos...',
                 multiple: true,
-                maximumSelectionSize:1,
+                maximumSelectionSize: 1,
                 ajax: {
                     url: '/searchYoutube',
                     dataType: 'json',
-                    data: function (term) {
+                    data: function(term) {
                         return {
                             q: term
                         };
                     },
-                    results: function (data) {
+                    results: function(data) {
                         return {results: data};
                     }
                 },
                 formatResult: function(result) {
-                    return "<img class='flag' src='" +result.thumbnail+ "'/><span class='video-title'>" + result.title + "</span>";
+                    return "<img class='flag' src='" + result.thumbnail + "'/><span class='video-title'>" + result.title + "</span>";
                 },
                 formatSelection: function(result) {
                     return result.title;
@@ -79,8 +79,9 @@ define(function(require) {
 
         render: function() {
             var style = {
-                width:'60%',
-                'margin-left':'20px'
+                width: '85%',
+                'max-width': '750px',
+                'margin-left': '5px'
             };
 
             return (<input type="hidden" id="search-box" multiple style={style} />);
