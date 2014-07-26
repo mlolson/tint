@@ -1,5 +1,5 @@
 /**
- * Component defining a list of tweets on the left side of the page
+ * Component defining the paginating list of tweets.
  */
 define(function(require) {
 

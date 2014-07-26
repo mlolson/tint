@@ -1,5 +1,5 @@
 /**
- * Component defining the video player on the right side of the page.
+ * Component defining the video player.
  */
 define(function(require) {
     var React = require('react');
