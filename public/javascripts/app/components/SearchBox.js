@@ -5,86 +5,61 @@ define(function(require) {
 
     var React = require('react'),
         $ = require('jquery'),
-        TweetList = require('jsx!./TweetList'),
-        VideoPlayer = require('jsx!./VideoPlayer'),
-        tweetContainer = document.getElementById('tweets-col'),
-        videoContainer = document.getElementById('video-col');
-
-    require('select2');
+        VideoResults = require('jsx!./VideoResults');
 
     return React.createClass({
 
-        /**
-         * Called when a video is selected from the dropdown. Loads the video and
-         * corresponding list of tweets
-         * @param video
-         */
-        onSelectVideo: function(video) {
-            videoContainer.innerHTML = '';
-            React.renderComponent(VideoPlayer({video: video}), videoContainer);
+        getInitialState: function() {
+            return {
+                videoResults: []
+            }
+        },
 
-            $.ajax({
-                method: 'GET',
-                url: '/searchTwitter',
-                dataType: 'json',
-                data: {
-                    q: video.id
-                }
-            }).done(function(data) {
-                tweetContainer.innerHTML = '';
-                React.renderComponent(TweetList({tweets: data, videoId: video.id}), tweetContainer);
-                twttr.widgets.load();
-            }.bind(this));
+        /**
+         * Make a call to the server for video search,
+         * or clear results if query is empty
+         * @param query
+         */
+        searchVideos: function(query) {
+            if(query.length > 1) {
+                $.ajax({
+                    method: 'GET',
+                    url: '/search',
+                    dataType: 'json',
+                    data: {
+                        q: query
+                    }
+                }).done(function(data) {
+                    this.setState({
+                        videoResults:data
+                    });
+                }.bind(this));
+            }else {
+                this.setState({videoResults:[]});
+            }
+
         },
 
         /**
          * Called after component is mounted
          */
         componentDidMount: function() {
-
-            var $searchBox = $('#search-box');
-            $searchBox.select2({
-                minimumInputLength: 2,
-                allowClear: true,
-                placeholder: 'Search YouTube videos...',
-                multiple: true,
-                maximumSelectionSize: 1,
-                ajax: {
-                    url: '/searchYoutube',
-                    dataType: 'json',
-                    data: function(term) {
-                        return {
-                            q: term
-                        };
-                    },
-                    results: function(data) {
-                        return {results: data};
-                    }
-                },
-                formatResult: function(result) {
-                    return "<img class='flag' src='" + result.thumbnail + "'/><span class='video-title'>" + result.title + "</span>";
-                },
-                formatSelection: function(result) {
-                    return result.title;
-                }
-            });
-
-            $searchBox.on('change', function(e) {
-                if(e.val.length > 0) {
-                    this.onSelectVideo(e.added);
-                }
+            $('#search-box').on('input', function(e) {
+                this.searchVideos(e.target.value);
             }.bind(this));
-
         },
 
         render: function() {
-            var style = {
-                width: '85%',
-                'max-width': '750px',
-                'margin-left': '5px'
-            };
-
-            return (<input type="hidden" id="search-box" multiple style={style} />);
+            return (
+                <div>
+                    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+                        <div id="search-box-container" class="container-fluid">
+                            <input type="text" className="form-control" id="search-box" placeholder="Search Youtube Videos..."/>
+                        </div>
+                    </div>
+                    <VideoResults videos={this.state.videoResults} nextPageToken={this.props.nextPageToken}/>
+                </div>
+                );
         }
     });
 });

@@ -16,9 +16,11 @@ import scala.collection.JavaConversions._
  */
 object YoutubeAPI {
 
-  val num_results = 10
+  val num_results = 16
   val apikey = Play.current.configuration.getString("youtube.apikey").get
   val appname = Play.current.configuration.getString("youtube.appname").get
+  val searchFields = "items(id/kind,id/videoId,snippet/title,snippet/description,snippet/channelTitle,snippet/channelId,snippet/thumbnails/default/url)"
+  val searchType = "video"
 
   val youtube = new YouTube.Builder(new NetHttpTransport(), new JacksonFactory(), new HttpRequestInitializer() {
     def initialize(request: HttpRequest) {
@@ -30,10 +32,11 @@ object YoutubeAPI {
     val search = youtube.search().list("id,snippet")
     search.setKey(apikey)
     search.setQ(queryTerm)
-    search.setType("video")
-    search.setFields("items(id/kind,id/videoId,snippet/title,snippet/thumbnails/default/url)")
+    search.setType(searchType)
+    search.setFields(searchFields)
     search.setMaxResults(num_results)
 
-    Json.toJson(search.execute().getItems().map(result => YoutubeResult(result)))
+    Json.toJson(search.execute.getItems.map(result => YoutubeResult(result)))
   }
+
 }

@@ -9,8 +9,7 @@ requirejs.config({
         react: 'vendor/react/react',
         jsx: 'vendor/jsx/jsx',
         JSXTransformer: 'vendor/jsx/JSXTransformer',
-        text: 'vendor/jsx/text',
-        select2: 'vendor/select2/select2.min'
+        text: 'vendor/jsx/text'
     },
 
     shim: {
