@@ -6,7 +6,7 @@ import play.api.mvc._
 object Application extends Controller {
 
   def index = Action {
-    Ok(views.html.index("YouTube/Twitter cross search"))
+    Ok(views.html.index("YouTube Instant Search"))
   }
 
   def searchYouTube(q: String) = Action {
